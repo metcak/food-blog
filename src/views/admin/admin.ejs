@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fadime Dursun Blog</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+
+<body>
+    <!-- <div class="container mt-5 mb-5">
+        <h1 class="text-center">Admin Giris</h1>
+        <form action="/admin" method="POST">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email</label>
+                <input type="email" class="form-control" id="adminEmail" aria-describedby="emailHelp" name="username">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="adminPassword" name="password">
+            </div>
+            <button type="submit" class="btn btn-primary">Giris Yap</button>
+        </form>
+    </div> -->
+
+    <nav class="navbar navbar-light bg-light mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand">Admin</a>
+            <a class="nav-link" href="/logout">Cikis</a>
+        </div>
+    </nav>
+    <div class="container">
+        <% adminActions.forEach( action=> { %>
+            <div class="row">
+                <div class="col-lg-4 mx-auto mb-2">
+                    <button id="<%=action.actionId%>" onclick="getID(this.id)" type="button"
+                        class="btn btn-outline-primary">
+                        <%= action.displayName %>
+                    </button>
+                </div>
+            </div>
+            <% }) %>
+    </div>
+    <script>
+        function getID(id) {
+            if (id == 1) {
+                window.location.href = "Yeni-Blog-Ekle";
+                return false;
+            } /* else if (id == 2) {
+                window.location.href = "Resmi-Degistir";
+                return false;
+            } else if (id == 3) {
+                window.location.href = "Yaziyi-Degistir";
+                return false;
+            } else if (id == 4) {
+                window.location.href = "Logo-Degistir";
+                return false;
+            } */
+        }
+    </script>
+</body>
+
+</html>
