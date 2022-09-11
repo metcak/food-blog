@@ -19,7 +19,7 @@ app.use("/uploads", express.static("uploads"));
 
 // Database
 mongoose
-  .connect("mongodb://localhost/fdmdrsnBlog", {
+  .connect("mongodb://0.0.0.0:27017/fdmdrsnBlog", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
