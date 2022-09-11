@@ -25,6 +25,7 @@ use CKSource\CKFinder\Exception\InvalidExtensionException;
 use CKSource\CKFinder\Exception\InvalidNameException;
 use CKSource\CKFinder\Exception\InvalidUploadException;
 use CKSource\CKFinder\Filesystem\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\UploadedFile as UploadedFileBase;
 use CKSource\CKFinder\Filesystem\Folder\WorkingFolder;
 use CKSource\CKFinder\Filesystem\Path;
 use CKSource\CKFinder\Image;
@@ -62,6 +63,11 @@ class FileUpload extends CommandAbstract
 
         if (null === $upload) {
             throw new InvalidUploadException();
+        }
+
+        // Extra check to handle older Symfony components on PHP 8.1+.
+        if (is_array($upload)) {
+            $upload = new UploadedFileBase($upload['tmp_name'], $upload['name'], $upload['type'], $upload['error'], false);
         }
 
         $uploadedFile = new UploadedFile($upload, $this->app);

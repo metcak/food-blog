@@ -16,20 +16,25 @@
                             <a href="/" class="nav-link">Ana Sayfa</a>
                         </li>
                         <li>
-                            <a href="/tarifler" class="nav-link">Tarifler</a>
+                            <a href="/duenya" class="nav-link">Dünya Mutfağı</a>
                         </li>
+                        <!-- <li>
+                            <a href="/tarifler" class="nav-link">Tarifler</a>
+                        </li> -->
                         <li>
                             <a href="/kahvalti" class="nav-link">Kahvalti</a>
                         </li>
                         <li>
-                            <a href="/aksam-yemegi" class="nav-link">Aksam Yemegi</a>
+                            <a href="/aksam-yemegi" class="nav-link">Akşam Yemeği</a>
                         </li>
                         <li class="active">
                             <a href="/tatlilar" class="nav-link">Tatlilar</a>
                         </li>
+                         <!--
                         <li>
                             <a href="/hakkimda" class="nav-link">Hakkimda</a>
                         </li>
+                        -->
                     </ul>
                 </nav>
             </div>
@@ -42,7 +47,160 @@
     </div>
     </header>
 
-    <h1>Tatlilar</h1>
+    <section class="categories">
+        <div class="container">
+            <div class="categories-post">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8">
+                        <% blogs.forEach((post,index)=> { %>
+                            <% post.blogCategories.forEach((category,index)=> { %>
+                                <% if(category.trim() === "Tatlılar"){ %>
+                                    <div class="categories-post-item categories-post-item-large">
+                                        <div class="categories-post-item-pic set-bg"
+                                            style="background-image: url(<%=post.blogImage%>);">
+                                            <div class="post-meta">
+                                                <h4>
+                                                    <%= post.date.getDate() %>
+                                                </h4>
+                                                <span>
+                                                    <% const monthNames=["January", "February" , "March" , "April" , "May"
+                                                        , "June" , "July" , "August" , "September" , "October" , "November"
+                                                        , "December" ]; %>
+                                                        <%= monthNames[post.date.getMonth()] %>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="categories-post-item-text">
+                                            <ul class="post-label-large">
+                                                    <li>
+                                                        <%= category %>
+                                                    </li>
+                                            </ul>
+                                            <h3>
+                                                <a href="/blog/<%= post.slug %>">
+                                                    <%= post.blogTitle %>
+                                                </a>
+                                            </h3>
+                                            <ul class="post-widget">
+                                                <li>
+                                                    <%= post.blogTime %> dakika
+                                                </li>
+                                            </ul>
+                                            <p>
+                                                <%- post.blogSubtitle.substr(0,150) + "..." %>
+                                            </p>
+                                            <a href="/blog/<%= post.slug %>" class="primary-btn">Devami icin tikla...</a>
+                                            <!-- <div class="post-social">
+                                                        <span>Paylas</span>
+                                                        <a href="#">
+                                                            <i class="fab fa-instagram"></i>
+                                                            <span>24</span>
+                                                        </a>
+                                                        <a href="#">
+                                                            <i class="fab fa-facebook-f"></i>
+                                                            <span>33</span>
+                                                        </a>
+                                                        <a href="#">
+                                                            <i class="fab fa-twitter"></i>
+                                                            <span>43</span>
+                                                        </a> -->
+                                        </div>
+                                    </div>
+                                <% }; %>
+                            <% }); %>
+                        <% }); %>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <div class="sidebar-item">
+                            <div class="sidebar-about-item">
+                                <div class="sidebar-item-title">
+                                    <h6>Hakkimda</h6>
+                                </div>
+                                <img src="" alt="">
+                                <h6>Merhaba herkese, benim adim <span>Fadime Dursun</span></h6>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, odit delectus
+                                    veritatis nulla
+                                    aliquam
+                                    provident.</p>
+                                <a href="/hakkimda" class="primary-btn">Devami icin tikla...</a>
+                            </div>
+                            <div class="sidebar-follow-item">
+                                <div class="sidebar-item-title">
+                                    <h6>Bizi takip et</h6>
+                                </div>
+                                <div class="sidebar-item-follow-links">
+                                    <!--
+                                    <a href="https://www.youtube.com/channel/UCpo5YbbcbJcN-MtmqQBQltg"
+                                        target="_blank"><i class="fab fa-youtube"></i></a>
+                                    -->
+                                    <a href="https://www.instagram.com/geziteria/" target="_blank"><i
+                                            class="fab fa-instagram"></i></a>
+                                    <a href="https://www.facebook.com/Geziteria-101189792703029" target="_blank"><i
+                                            class="fab fa-facebook-f"></i></a>
+                                    <!--
+                                    <a href="https://twitter.com/fadimeberlin" target="_blank"><i
+                                            class="fab fa-twitter"></i></a>
+                                    <a href="#" target="_blank"><i class="far fa-envelope"></i></a>
+                                    -->
+                                </div>
+                            </div>
+                            <div class="sidebar-popular-item">
+                                <div class="sidebar-item-title">
+                                    <h6>En sevilenler</h6>
+                                </div>
+                                <ul>
+                                    <% blogs.forEach((post,index)=> { %>
+                                        <li class="popular-list-item">
+                                            <div class="popular-item">
+                                                <div class="popular-img-item">
+                                                    <a class="popular-img-item-pic set-bg" href="#"
+                                                        style="background-image: url(<%=post.blogImage%>)"></a>
+                                                </div>
+                                                <div class="popular-text-item">
+                                                    <h4 class="text-title-post">
+                                                        <a href="/blog/<%= post._id %>">
+                                                            <%= post.blogTitle %>
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <% }); %>
+                                </ul>
+                            </div>
+                            <div class="sidebar-quote-item">
+                                <div class="sidebar-item-title">
+                                    <h6>Yorumlar</h6>
+                                </div>
+                                <div class="sidebar-quote-container">
+                                    <i class="fas fa-quote-left"></i>
+                                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis nihil
+                                        deserunt totam, quasi
+                                        facilis nesciunt.</p>
+                                    <div class="posted-by">Nureddin Dursun</div>
+                                </div>
+                            </div>
+                            <div class="sidebar-subscribe-item">
+                                <div class="sidebar-item-title">
+                                    <h6>Abone Ol</h6>
+                                </div>
+                                <p>Takip et ve en yeni tarifler mail adresine gelsin.</p>
+                                <form action="#">
+                                    <input type="email" class="email-input" name="" placeholder="Mail adresin">
+                                    <label for="s-agree-check">
+                                        I agree to the terms & conditions
+                                        <input type="checkbox" name="" id="s-agree-check">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <button type="submit" class="site-btn">Abone ol</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <br>
 

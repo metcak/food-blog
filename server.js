@@ -7,14 +7,14 @@ const { ensureLoggedIn } = require("connect-ensure-login");
 const Admin = require("./models/adminModel");
 
 const app = express();
-const port = 5000;
+const port = 5001;
 
 // Static Files
 app.use(express.static("public"));
 app.use("/css", express.static(__dirname + "public/css"));
 app.use("/img", express.static(__dirname + "public/img"));
 app.use("/js", express.static(__dirname + "public/js"));
-app.use(express.json());
+app.use("/ckfinder", express.static(__dirname + "public/ckfinder"));
 app.use("/uploads", express.static("uploads"));
 
 // Database
@@ -23,6 +23,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
+    useCreateIndex: true
   })
   .then((x) => {
     console.log(
@@ -36,7 +37,6 @@ mongoose
 // Templating Engine
 app.set("view engine", "ejs");
 app.set("views", "./src/views");
-app.use(express.urlencoded({ extended: true }));
 
 // Passport Config
 app.use(
@@ -67,6 +67,9 @@ const blogRouter = require("./src/routes/blog");
 const categoryRouter = require("./src/routes/category");
 const aboutRouter = require("./src/routes/about");
 const uploadRouter = require("./src/routes/upload");
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/", homeRouter);
 app.use("/", adminRouter);

@@ -44,10 +44,10 @@ adminRouter.post(
   }
 );
 
-adminRouter.get("/signup", ensureLoggedIn("/signin"), async (req, res) => {
+adminRouter.get("/signup", async (req, res) => {
   res.render("admin/signup");
 });
-adminRouter.post("/signup", ensureLoggedIn("/signin"), async (req, res) => {
+adminRouter.post("/signup", async (req, res) => {
   let newAdmin = new Admin({ username: req.body.username });
 
   Admin.register(newAdmin, req.body.password, (err, admin) => {

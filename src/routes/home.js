@@ -14,14 +14,37 @@ homeRouter.get("/", async (req, res) => {
 homeRouter.get("/tarifler", async (req, res) => {
   res.render("recipes");
 });
+homeRouter.get("/duenya", async (req, res) => {
+  try {
+    const blogs = await Blog.find().sort({ date: "desc" });
+    res.render("world", { blogs: blogs });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 homeRouter.get("/kahvalti", async (req, res) => {
-  res.render("breakfast");
+  try {
+    const blogs = await Blog.find().sort({ date: "desc" });
+    res.render("breakfast", { blogs: blogs });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 homeRouter.get("/aksam-yemegi", async (req, res) => {
-  res.render("dinner");
+  try {
+    const blogs = await Blog.find().sort({ date: "desc" });
+    res.render("dinner", { blogs: blogs });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 homeRouter.get("/tatlilar", async (req, res) => {
-  res.render("desserts");
+  try {
+    const blogs = await Blog.find().sort({ date: "desc" });
+    res.render("desserts", { blogs: blogs });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 homeRouter.get("/signin", async (req, res) => {
   res.render("../views/admin/signin.ejs");

@@ -6,7 +6,7 @@
                     <i class="fas fa-bars"></i>
                 </div>
                 <div class="header-brand">
-                    <a href="/" class="nav-brand">FdmDrsn</a>
+                    <a href="/" class="nav-brand">Geziteria</a>
                 </div>
             </div>
             <div class="col-lg-8 col-md-8 order-md-2 order-2 my-collapse">
@@ -16,8 +16,11 @@
                             <a href="/" class="nav-link">Ana Sayfa</a>
                         </li>
                         <li>
-                            <a href="/tarifler" class="nav-link">Tarifler</a>
+                            <a href="/duenya" class="nav-link">Dünya Mutfağı</a>
                         </li>
+                        <!-- <li>
+                            <a href="/tarifler" class="nav-link">Tarifler</a>
+                        </li> -->
                         <li>
                             <a href="/kahvalti" class="nav-link">Kahvalti</a>
                         </li>
@@ -27,9 +30,11 @@
                         <li>
                             <a href="/tatlilar" class="nav-link">Tatlilar</a>
                         </li>
+                        <!--
                         <li>
                             <a href="/hakkimda" class="nav-link">Hakkimda</a>
                         </li>
+                        -->
                     </ul>
                 </nav>
             </div>
@@ -52,19 +57,16 @@
                     <% blogs.forEach((post,index)=> { %>
                         <div class="owl-item">
                             <div class="hero-item">
-                                <a href="/blog/<%= post._id %>">
+                                <a href="/blog/<%= post.slug %>">
                                     <div class="hero-inside-item hero-inside-item-wide set-bg"
-                                        style="background-image: url(<%=post.blogImage%>)">
+                                        style="background-image: url(<%=post.blogImage%>)" title="<%= post.blogTitle %>">
                                         <div class="hero-inside-item-infos">
                                             <div class="hero-inside-item-meta">
                                                 <span>
-                                                    <%= post.date.getDate() %>
+                                                    <%= post.blogTime %>
                                                 </span>
                                                 <p>
-                                                    <% const monthNames=["January", "February" , "March" , "April"
-                                                        , "May" , "June" , "July" , "August" , "September" , "October"
-                                                        , "November" , "December" ]; %>
-                                                        <%= monthNames[post.date.getMonth()] %>
+                                                    dakika
                                                 </p>
                                             </div>
                                             <div class="hero-inside-item-text">
@@ -80,7 +82,10 @@
                                                 </h4>
                                                 <ul class="widget">
                                                     <li>
-                                                        <%= post.blogTime %> dakika
+                                                        <% const monthNames=["Ocak", "Şubat" , "Mart" , "Nisan"
+                                                        , "Mayıs" , "Haziran" , "Temmuz" , "Ağustos" , "Eylül" , "Ekim"
+                                                        , "Kasım" , "Aralık" ]; %>
+                                                        <%= post.date.getDate() %> <%= monthNames[post.date.getMonth()] %> <%= post.date.getFullYear() %>
                                                     </li>
                                                     <!-- <li>20 yorum</li> -->
                                                 </ul>
@@ -103,16 +108,13 @@
                         <% blogs.forEach((post,index)=> { %>
                             <div class="categories-post-item categories-post-item-large">
                                 <div class="categories-post-item-pic set-bg"
-                                    style="background-image: url(<%=post.blogImage%>);">
+                                    style="background-image: url(<%=post.blogImage%>);" title="<%= post.blogTitle %>">
                                     <div class="post-meta">
                                         <h4>
-                                            <%= post.date.getDate() %>
+                                            <%= post.blogTime %>
                                         </h4>
                                         <span>
-                                            <% const monthNames=["January", "February" , "March" , "April" , "May"
-                                                , "June" , "July" , "August" , "September" , "October" , "November"
-                                                , "December" ]; %>
-                                                <%= monthNames[post.date.getMonth()] %>
+                                            dakika
                                         </span>
                                     </div>
                                 </div>
@@ -125,19 +127,22 @@
                                             <% }); %>
                                     </ul>
                                     <h3>
-                                        <a href="/blog/<%= post._id %>">
+                                        <a href="/blog/<%= post.slug %>">
                                             <%= post.blogTitle %>
                                         </a>
                                     </h3>
                                     <ul class="post-widget">
                                         <li>
-                                            <%= post.blogTime %> dakika
+                                            <% const monthNames=["Ocak", "Şubat" , "Mart" , "Nisan"
+                                                        , "Mayıs" , "Haziran" , "Temmuz" , "Ağustos" , "Eylül" , "Ekim"
+                                                        , "Kasım" , "Aralık" ]; %>
+                                            <%= post.date.getDate() %> <%= monthNames[post.date.getMonth()] %> <%= post.date.getFullYear() %>
                                         </li>
                                     </ul>
                                     <p>
                                         <%- post.blogSubtitle.substr(0,150) + "..." %>
                                     </p>
-                                    <a href="/blog/<%= post._id %>" class="primary-btn">Devami icin tikla...</a>
+                                    <a href="/blog/<%= post.slug %>" class="primary-btn">Devami icin tikla...</a>
                                     <!-- <div class="post-social">
                                                 <span>Paylas</span>
                                                 <a href="#">
@@ -162,7 +167,7 @@
                                 <div class="sidebar-item-title">
                                     <h6>Hakkimda</h6>
                                 </div>
-                                <img src="./img/image7.jpg" alt="">
+                                <img src="" alt="">
                                 <h6>Merhaba herkese, benim adim <span>Fadime Dursun</span></h6>
                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, odit delectus
                                     veritatis nulla
@@ -172,18 +177,22 @@
                             </div>
                             <div class="sidebar-follow-item">
                                 <div class="sidebar-item-title">
-                                    <h6>Beni takip et</h6>
+                                    <h6>Bizi takip et</h6>
                                 </div>
                                 <div class="sidebar-item-follow-links">
+                                    <!--
                                     <a href="https://www.youtube.com/channel/UCpo5YbbcbJcN-MtmqQBQltg"
                                         target="_blank"><i class="fab fa-youtube"></i></a>
-                                    <a href="https://www.instagram.com/fadimeoezdemirdursun/" target="_blank"><i
+                                    -->
+                                    <a href="https://www.instagram.com/geziteria/" target="_blank"><i
                                             class="fab fa-instagram"></i></a>
-                                    <a href="https://www.facebook.com/fadime.o.dursun" target="_blank"><i
+                                    <a href="https://www.facebook.com/Geziteria-101189792703029" target="_blank"><i
                                             class="fab fa-facebook-f"></i></a>
+                                    <!--
                                     <a href="https://twitter.com/fadimeberlin" target="_blank"><i
                                             class="fab fa-twitter"></i></a>
                                     <a href="#" target="_blank"><i class="far fa-envelope"></i></a>
+                                    -->
                                 </div>
                             </div>
                             <div class="sidebar-popular-item">
@@ -196,11 +205,11 @@
                                             <div class="popular-item">
                                                 <div class="popular-img-item">
                                                     <a class="popular-img-item-pic set-bg" href="#"
-                                                        style="background-image: url(<%=post.blogImage%>)"></a>
+                                                        style="background-image: url(<%=post.blogImage%>)" title="<%= post.blogTitle %>"></a>
                                                 </div>
                                                 <div class="popular-text-item">
                                                     <h4 class="text-title-post">
-                                                        <a href="/blog/<%= post._id %>">
+                                                        <a href="/blog/<%= post.slug %>">
                                                             <%= post.blogTitle %>
                                                         </a>
                                                     </h4>

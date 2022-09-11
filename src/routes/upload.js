@@ -7,7 +7,7 @@ const fs = require("fs");
 uploadRouter.post("/uploads", multipartMiddleware, function (req, res) {
   fs.readFile(req.files.upload.path, function (err, data) {
     var newPath =
-      "/Users/mcakmak/BlogProjects/Food_Blog/uploads/" + req.files.upload.name;
+      "/Users/burcukepsutlu/Projects/food-blog/uploads/" + req.files.upload.name;
     fs.writeFile(newPath, data, function (err) {
       if (err) console.log({ err: err });
       else {
@@ -30,14 +30,8 @@ uploadRouter.post("/uploads", multipartMiddleware, function (req, res) {
         console.log({ url, msg, funcNum });
         res
           .status(201)
-          .send(
-            "<script>window.parent.CKEDITOR.tools.callFunction('" +
-              funcNum +
-              "','" +
-              url +
-              "','" +
-              msg +
-              "');</script>"
+          .json(
+            "Uploaded"
           );
       }
     });

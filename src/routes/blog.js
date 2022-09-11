@@ -20,18 +20,18 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-blogRouter.get("/ckfinder/ckfinder.html", async (req, res) => {
-  res.render("../../public/ckfinder/ckfinder.html");
-});
-blogRouter.post(
-  "/ckfinder/core/connector.php?command=QuickUpload&type=Files",
-  upload.single("upload"),
-  async (req, res) => {
-    res.render(
-      "../../public/ckfinder/core/vendor/connector.php?command=QuickUpload&type=Files"
-    );
-  }
-);
+// blogRouter.get("ckfinder/ckfinder.html", async (req, res) => {
+//   res.render("ckfinder/ckfinder.html");
+// });
+// blogRouter.post(
+//   "ckfinder/core/connector.php?command=QuickUpload&type=Files",
+//   upload.single("upload"),
+//   async (req, res) => {
+//     res.render(
+//       "ckfinder/core/vendor/connector.php?command=QuickUpload&type=Files"
+//     );
+//   }
+// );
 
 blogRouter.post("/Yeni-Blog-Ekle", upload.single("blogImage"), (req, res) => {
   const blog = req.body.data.blog;
@@ -50,17 +50,10 @@ blogRouter.post("/Yeni-Blog-Ekle", upload.single("blogImage"), (req, res) => {
     blogImage: blogImage,
   };
 
-  /* const newBlogAdded = await newBlog.save();
-      //console.log(newBlogAdded);
-      res.status(200).json(newBlogAdded);
-    } catch (err) {
-      res.status(500).json({ error: "Blog Post Error" });
-    }  */
   Blog.create(newBlog)
     .then((newBlog) => {
       console.log(newBlog);
       res.status(201).json(newBlog);
-      res.redirect("/Yeni-Blog-Ekle");
     })
     .catch((err) => {
       console.log("====== ERROR =====");
@@ -99,12 +92,11 @@ blogRouter.get("/api/blogs/:id", async (req, res) => {
     res.status(500).json(err);
   }
 });
-blogRouter.get("/blog/:id", async (req, res) => {
+blogRouter.get("/blog/:slug", async (req, res) => {
   try {
-    const blog = await Blog.findById(req.params.id);
+    const blog = await Blog.findOne({ slug: req.params.slug });
     const blogs = await Blog.find();
-    //res.status(200).json(post);
-    res.render("blog/singleBlog", { blog: blog, blogs: blogs });
+    res.render(`blog/singleBlog`, { blog: blog, blogs: blogs });
   } catch (err) {
     res.status(500).json(err);
   }

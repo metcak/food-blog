@@ -93,12 +93,12 @@ ol {
   padding-bottom: 10px;
 }
 .nav-brand {
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Dancing Script', cursive;
   font-weight: bold;
   font-size: 22px;
   color: black;
   padding: 5px 0px;
-  display: block;
+  display: none;
 }
 .header-humberger {
   position: absolute;
@@ -259,7 +259,7 @@ ol {
 .hero-inside-item-meta span {
   font-size: 26px;
   color: #ffffff;
-  font-weight: 900;
+  font-weight: 700;
   line-height: 18px;
 }
 
@@ -367,6 +367,16 @@ ol {
 .owl-carousel .owl-nav.disabled {
   display: block;
 }
+.blog {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 18px;
+}
+.blog p{
+  font-size: 18px;
+}
+.blog ol{
+  padding: 0 15px;
+}
 /* Categories */
 .categories {
   padding: 60px 0 100px 0;
@@ -396,7 +406,7 @@ ol {
 }
 .categories-post-item-pic {
   position: relative;
-  margin-bottom: 25px;
+  margin: 25px 0;
   height: 506px;
 }
 .categories-post-item.categories-post-item-large .categories-post-item-pic {
@@ -560,6 +570,7 @@ ol {
 }
 .sidebar-about-item {
   margin-bottom: 60px;
+  display: none;
 }
 .sidebar-item-title,
 .humberger-menu-title {
@@ -598,7 +609,7 @@ ol {
   color: #f4952f;
 }
 .sidebar-follow-item {
-  margin-bottom: 60px;
+  margin-bottom: 30px;
 }
 .sidebar-item-follow-links a,
 .footer-item-follow-links a,
@@ -645,6 +656,9 @@ ol {
   display: inline-block;
   width: 120px;
   height: 80px;
+}
+.sidebar-quote-item {
+  display: none;
 }
 .sidebar-quote-container {
   background: #f5f5f5;
@@ -732,12 +746,13 @@ button:not(:disabled) {
 .footer {
   border-top: 1px solid #f4952f;
   /* background: #f5f5f5; */
-  padding-top: 20px;
+  padding-top: 0px;
 }
 .footer-instagram {
   padding-left: 15px;
   padding-right: 15px;
   position: relative;
+  display: none;
 }
 .footer-instagram-title {
   text-align: center;
@@ -840,7 +855,7 @@ button:not(:disabled) {
     margin-right: 0px;
   }
   .categories {
-    padding: 10px 0 30px 0;
+    padding: 30px 0 30px 0;
   }
   .footer-logo {
     padding: 20px 0;

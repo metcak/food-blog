@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fadime Dursun Blog</title>
+    <title><%= blog.blogTitle %></title>
     <link href="https://fonts.googleapis.com/css?family=Unna:400,700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" href="../css/style.css" />
+    <meta name="description" content="<%= blog.blogSubtitle %>" />
+    <meta name="keywords" content="<%= blog.blogCategories.join()%>" />
 </head>
 
 <body>
@@ -27,21 +29,23 @@
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-4 col-6 order-sm-1 order-1">
                         <div class="header-social">
-                            <a href="https://www.facebook.com/fadime.o.dursun" target="_blank">
+                            <a href="https://www.instagram.com/geziteria/" target="_blank">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.facebook.com/Geziteria-101189792703029" target="_blank">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
+                            <!--
                             <a href="https://twitter.com/fadimeberlin" target="_blank">
                                 <i class="fab fa-twitter"></i>
                             </a>
                             <a href="https://www.youtube.com/channel/UCpo5YbbcbJcN-MtmqQBQltg" target="_blank">
                                 <i class="fab fa-youtube"></i>
                             </a>
-                            <a href="https://www.instagram.com/fadimeoezdemirdursun/" target="_blank">
-                                <i class="fab fa-instagram"></i>
-                            </a>
                             <a href="#" target="_blank">
                                 <i class="far fa-envelope"></i>
                             </a>
+                            -->
                         </div>
                     </div>
                 </div>
@@ -49,7 +53,7 @@
         </div>
         <div class="container logo">
             <div class="header-logo">
-                <a href="/"> <img src="../img/logo.png" alt="" /></a>
+                <a href="/"> <img src="../../img/Logo_v10_web.png" alt="" /></a>
             </div>
             <div class="header-slogan">
                 <div class="header-slogan-text">
@@ -74,20 +78,25 @@
                                 <a href="/" class="nav-link">Ana Sayfa</a>
                             </li>
                             <li>
-                                <a href="/tarifler" class="nav-link">Tarifler</a>
+                                <a href="/duenya" class="nav-link">Dünya Mutfağı</a>
                             </li>
+                            <!-- <li>
+                                <a href="/tarifler" class="nav-link">Tarifler</a>
+                            </li> -->
                             <li>
                                 <a href="/kahvalti" class="nav-link">Kahvalti</a>
                             </li>
                             <li>
-                                <a href="/aksam-yemegi" class="nav-link">Aksam Yemegi</a>
+                                <a href="/aksam-yemegi" class="nav-link">Akşam Yemeği</a>
                             </li>
                             <li>
                                 <a href="/tatlilar" class="nav-link">Tatlilar</a>
                             </li>
+                            <!--
                             <li>
                                 <a href="/hakkimda" class="nav-link">Hakkimda</a>
                             </li>
+                            -->
                         </ul>
                     </nav>
                 </div>
@@ -105,17 +114,17 @@
                 <div class="row">
                     <div class="col-lg-8 col-md-8">
                         <div class="categories-post-item categories-post-item-large">
+                            <h3>
+                                <%= blog.blogTitle %>
+                            </h3>
                             <div class="categories-post-item-pic set-bg"
-                                style="background-image: url(../<%=blog.blogImage%>);">
+                                style="background-image: url(../<%=blog.blogImage%>);" title="<%= blog.blogTitle %>">
                                 <div class="post-meta">
                                     <h4>
-                                        <%= blog.date.getDate() %>
+                                        <%= blog.blogTime %>
                                     </h4>
                                     <span>
-                                        <% const monthNames=["January", "February" , "March" , "April" , "May" , "June"
-                                            , "July" , "August" , "September" , "October" , "November" , "December" ];
-                                            %>
-                                            <%= monthNames[blog.date.getMonth()] %>
+                                        Dakika
                                     </span>
                                 </div>
                             </div>
@@ -129,24 +138,15 @@
                                 </ul>
                                 <ul class="post-widget">
                                     <li>
-                                        <%= blog.blogTime %> dakika
+                                        <% const monthNames=["Ocak", "Şubat" , "Mart" , "Nisan"
+                                        , "Mayıs" , "Haziran" , "Temmuz" , "Ağustos" , "Eylül" , "Ekim"
+                                        , "Kasım" , "Aralık" ]; %>
+                                        <%= blog.date.getDate() %> <%= monthNames[blog.date.getMonth()] %> <%= blog.date.getFullYear() %>
                                     </li>
                                 </ul>
+                            </div>
+                            <div class="blog">
                                 <%- blog.blog %>
-                                    <!-- <div class="post-social">
-                                                <span>Paylas</span>
-                                                <a href="#">
-                                                    <i class="fab fa-instagram"></i>
-                                                    <span>24</span>
-                                                </a>
-                                                <a href="#">
-                                                    <i class="fab fa-facebook-f"></i>
-                                                    <span>33</span>
-                                                </a>
-                                                <a href="#">
-                                                    <i class="fab fa-twitter"></i>
-                                                    <span>43</span>
-                                                </a> -->
                             </div>
                         </div>
                     </div>
@@ -156,7 +156,7 @@
                                 <div class="sidebar-item-title">
                                     <h6>Hakkimda</h6>
                                 </div>
-                                <img src="../img/image7.jpg" alt="">
+                                <img src="" alt="">
                                 <h6>Merhaba herkese, benim adim <span>Fadime Dursun</span></h6>
                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, odit delectus
                                     veritatis nulla
@@ -166,18 +166,22 @@
                             </div>
                             <div class="sidebar-follow-item">
                                 <div class="sidebar-item-title">
-                                    <h6>Beni takip et</h6>
+                                    <h6>Bizi takip et</h6>
                                 </div>
                                 <div class="sidebar-item-follow-links">
+                                    <!--
                                     <a href="https://www.youtube.com/channel/UCpo5YbbcbJcN-MtmqQBQltg"
                                         target="_blank"><i class="fab fa-youtube"></i></a>
-                                    <a href="https://www.instagram.com/fadimeoezdemirdursun/" target="_blank"><i
+                                    -->
+                                    <a href="https://www.instagram.com/geziteria/" target="_blank"><i
                                             class="fab fa-instagram"></i></a>
-                                    <a href="https://www.facebook.com/fadime.o.dursun" target="_blank"><i
+                                    <a href="https://www.facebook.com/Geziteria-101189792703029" target="_blank"><i
                                             class="fab fa-facebook-f"></i></a>
+                                    <!--
                                     <a href="https://twitter.com/fadimeberlin" target="_blank"><i
                                             class="fab fa-twitter"></i></a>
                                     <a href="#" target="_blank"><i class="far fa-envelope"></i></a>
+                                    -->
                                 </div>
                             </div>
                             <div class="sidebar-popular-item">
@@ -190,11 +194,11 @@
                                             <div class="popular-item">
                                                 <div class="popular-img-item">
                                                     <a class="popular-img-item-pic set-bg" href="#"
-                                                        style="background-image: url(../<%=blog.blogImage%>)"></a>
+                                                        style="background-image: url(../<%=blog.blogImage%>)" title="<%= blog.blogTitle %>"></a>
                                                 </div>
                                                 <div class="popular-text-item">
                                                     <h4 class="text-title-post">
-                                                        <a href="/blog/<%= blog._id %>">
+                                                        <a href="/blog/<%= blog.slug %>">
                                                             <%= blog.blogTitle %>
                                                         </a>
                                                     </h4>
@@ -242,32 +246,32 @@
             <div class="footer-instagram">
                 <h4 class="footer-instagram-title">
                     <a href="#">
-                        <i class="fab fa-instagram"></i><span> Beni Instagram da takip et</span>
+                        <i class="fab fa-instagram"></i><span> Instagram da takip et</span>
                     </a>
                 </h4>
                 <div class="row">
                     <div class="col-lg-2 col-md-2 col-sm-4 col-6">
-                        <div class="footer-instagram-item set-bg" style="background-image: url(../img/image5.jpg);">
+                        <div class="footer-instagram-item set-bg" style="background-image: url();">
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-4 col-6">
-                        <div class="footer-instagram-item set-bg" style="background-image: url(../img/image6.jpg);">
+                        <div class="footer-instagram-item set-bg" style="background-image: url();">
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-4 col-6">
-                        <div class="footer-instagram-item set-bg" style="background-image: url(../img/image12.jpg);">
+                        <div class="footer-instagram-item set-bg" style="background-image: url();">
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-4 col-6">
-                        <div class="footer-instagram-item set-bg" style="background-image: url(../img/image8.jpg);">
+                        <div class="footer-instagram-item set-bg" style="background-image: url();">
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-4 col-6">
-                        <div class="footer-instagram-item set-bg" style="background-image: url(../img/image9.jpg);">
+                        <div class="footer-instagram-item set-bg" style="background-image: url();">
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-4 col-6">
-                        <div class="footer-instagram-item set-bg" style="background-image: url(../img/image10.jpg);">
+                        <div class="footer-instagram-item set-bg" style="background-image: url();">
                         </div>
                     </div>
                 </div>
@@ -279,21 +283,23 @@
                     <div class="footer-logo">
                         <a href="./index.html"> <img src="" alt="" /></a>
                         <div class="footer-item-follow-links">
-                            <a href="https://www.facebook.com/fadime.o.dursun" target="_blank">
+                            <a href="https://www.instagram.com/geziteria/" target="_blank">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.facebook.com/Geziteria-101189792703029" target="_blank">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
+                            <!--
                             <a href="https://twitter.com/fadimeberlin" target="_blank">
                                 <i class="fab fa-twitter"></i>
                             </a>
                             <a href="https://www.youtube.com/channel/UCpo5YbbcbJcN-MtmqQBQltg" target="_blank">
                                 <i class="fab fa-youtube"></i>
                             </a>
-                            <a href="https://www.instagram.com/fadimeoezdemirdursun/" target="_blank">
-                                <i class="fab fa-instagram"></i>
-                            </a>
                             <a href="#" target="_blank">
                                 <i class="far fa-envelope"></i>
                             </a>
+                            -->
                         </div>
                     </div>
 

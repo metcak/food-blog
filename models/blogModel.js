@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const marked = require("marked");
+const slugify = require("slugify");
 
 const BlogSchema = mongoose.Schema({
   blogCategories: { type: Array, required: true },
@@ -8,6 +10,14 @@ const BlogSchema = mongoose.Schema({
   blogTime: { type: String, required: true },
   blog: { type: String, required: true },
   date: { type: Date, default: Date.now },
+  slug: { type: String, required: true, unique: true}
 });
+
+BlogSchema.pre("validate", function(next) {
+  if(this.blogTitle) {
+    this.slug = slugify(this.blogTitle, {lower: true, strict: true })
+  }
+  next()
+})
 
 module.exports = mongoose.model("Blog", BlogSchema);
