@@ -7,7 +7,7 @@ const { ensureLoggedIn } = require("connect-ensure-login");
 const Admin = require("./models/adminModel");
 
 const app = express();
-const port = 5001;
+const port = process.env.port || 5001;
 
 // Static Files
 app.use(express.static("public"));
