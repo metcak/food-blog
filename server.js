@@ -8,6 +8,7 @@ const Admin = require("./models/adminModel");
 
 const app = express();
 const port = process.env.port || 5001;
+const MONGO_URI = "mongodb+srv://Metin:MetCak0707@cluster0.3o033fs.mongodb.net/?retryWrites=true&w=majority";
 
 // Static Files
 app.use(express.static("public"));
@@ -19,7 +20,7 @@ app.use("/uploads", express.static("uploads"));
 
 // Database
 mongoose
-  .connect("mongodb://127.0.0.1/fdmdrsnBlog", {
+  .connect(MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
