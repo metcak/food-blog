@@ -13,6 +13,8 @@
   "license": "ISC",
   "homepage": "https://metcak.github.io/food-blog/",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.178.0",
+    "@aws-sdk/s3-request-presigner": "^3.186.0",
     "@ckeditor/ckeditor5-adapter-ckfinder": "^28.0.0",
     "@ckeditor/ckeditor5-build-classic": "^28.0.0",
     "@ckeditor/ckeditor5-ckfinder": "^28.0.0",
@@ -20,21 +22,24 @@
     "body-parser": "^1.19.0",
     "connect-ensure-login": "^0.1.1",
     "connect-multiparty": "^2.2.0",
+    "crypto-js": "^4.1.1",
+    "dotenv": "^16.0.2",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "marked": "^4.0.16",
     "mongoose": "^5.12.2",
-    "multer": "^1.4.2",
+    "multer": "^1.4.5-lts.1",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^6.1.0",
+    "sharp": "^0.31.0",
     "slugify": "^1.5.3"
   },
   "devDependencies": {
     "eslint": "^8.23.1",
     "gh-pages": "^4.0.0",
-    "nodemon": "^2.0.19",
+    "nodemon": "^2.0.20",
     "prettier": "2.3.2"
   }
 }
