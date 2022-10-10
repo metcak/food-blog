@@ -2,7 +2,17 @@ const express = require("express");
 const { ensureLoggedIn } = require("connect-ensure-login");
 const blogRouter = express.Router();
 const Blog = require("../../models/blogModel");
-var multer = require("multer");
+const multer = require("multer");
+const multerS3 = require('multer-s3')
+const crypto = require("crypto");
+const sharp = require('sharp');
+const { uploadFile } = require('../../s3');
+const { getObjectSignedUrl } = require('../../s3');
+
+const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString("hex")
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 blogRouter.use("/Yeni-Blog-Ekle", ensureLoggedIn("/signin"), blogRouter);
 
@@ -10,36 +20,19 @@ blogRouter.get("/Yeni-Blog-Ekle", async (req, res) => {
   res.render("../views/blog/newBlog.ejs");
 });
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-const upload = multer({ storage: storage });
+blogRouter.post("/Yeni-Blog-Ekle", upload.single("blogImage"), async (req, res) => {
+  console.log('Body: ',JSON.parse(JSON.stringify(req.body)))
+  console.log('File(s): ',req.file)
+  const data = JSON.parse(req.body.data);
+  const blog = data.blog;
+  const blogTitle = data.blogTitle;
+  const blogSubtitle = data.blogSubtitle;
+  const blogCategories = data.blogCategories;
+  const blogTime = data.blogTime;
+  const blogImageName = randomImageName();
+  const buffer = await sharp(req.file.buffer).resize({height: 300, width: 600, fit: "contain"}).toBuffer();
 
-// blogRouter.get("ckfinder/ckfinder.html", async (req, res) => {
-//   res.render("ckfinder/ckfinder.html");
-// });
-// blogRouter.post(
-//   "ckfinder/core/connector.php?command=QuickUpload&type=Files",
-//   upload.single("upload"),
-//   async (req, res) => {
-//     res.render(
-//       "ckfinder/core/vendor/connector.php?command=QuickUpload&type=Files"
-//     );
-//   }
-// );
-
-blogRouter.post("/Yeni-Blog-Ekle", upload.single("blogImage"), (req, res) => {
-  const blog = req.body.data.blog;
-  const blogTitle = req.body.data.blogTitle;
-  const blogSubtitle = req.body.data.blogSubtitle;
-  const blogCategories = req.body.data.blogCategories;
-  const blogTime = req.body.data.blogTime;
-  const blogImage = "uploads/" + req.body.data.blogImage;
+  await uploadFile(buffer, blogImageName, req.file.mimetype);
 
   const newBlog = {
     blog: blog,
@@ -47,7 +40,7 @@ blogRouter.post("/Yeni-Blog-Ekle", upload.single("blogImage"), (req, res) => {
     blogSubtitle: blogSubtitle,
     blogCategories: blogCategories,
     blogTime: blogTime,
-    blogImage: blogImage,
+    blogImage: blogImageName,
   };
 
   Blog.create(newBlog)
@@ -60,6 +53,17 @@ blogRouter.post("/Yeni-Blog-Ekle", upload.single("blogImage"), (req, res) => {
       console.log(err);
       res.send(err);
     });
+});
+
+blogRouter.post("/upload", upload.single("upload"), async (req, res) => {
+  try {
+    console.log('File(s): ',req.file);
+    const blogImageName = randomImageName();
+    const buffer = await sharp(req.file.buffer).resize({height: 300, width: 600, fit: "contain"}).toBuffer();
+    await uploadFile(buffer, blogImageName, req.file.mimetype);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 blogRouter.put("/api/blogs/:id", async (req, res) => {
@@ -95,7 +99,11 @@ blogRouter.get("/api/blogs/:id", async (req, res) => {
 blogRouter.get("/blog/:slug", async (req, res) => {
   try {
     const blog = await Blog.findOne({ slug: req.params.slug });
+    blog.blogImage = await getObjectSignedUrl(blog.blogImage);
     const blogs = await Blog.find();
+    for (let blog of blogs) {
+      blog.blogImage = await getObjectSignedUrl(blog.blogImage);
+    }
     res.render(`blog/singleBlog`, { blog: blog, blogs: blogs });
   } catch (err) {
     res.status(500).json(err);
