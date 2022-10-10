@@ -24,7 +24,7 @@
     </nav>
     <div class="container mt-5 mb-5">
         <h1 class="text-center">Yeni Blog Ekle</h1>
-        <form id="form" action="/Yeni-Blog-Ekle" method="POST" enctype="multipart/form-data">
+        <form id="form" action="/Yeni-Blog-Ekle" method="post" enctype="multipart/form-data">
             <div class="form-group mb-3">
                 <label for="blogCategories" class="form-label">Konu</label>
                 <input type="text" class="form-control" id="blogCategories" placeholder="Vejeteryan, Tatlilar vs.">
@@ -58,71 +58,21 @@
     <script>
 
         $(document).ready(function () {
-            // var editor = CKEDITOR.replace( 'editor1' );
-            // CKFinder.setupCKEditor( editor );
-            // let editor;
-            // ClassicEditor
-            // .create( document.querySelector( '#editor' ), {
-            //     ckfinder: {
-            //     // Upload the images to the server using the CKFinder QuickUpload command.
-            //     uploadUrl: 'uploads/'
-            //     }
-            // } )
-            // .then( newEditor => {
-            //     editor = newEditor;
-            // })
-            // .catch( error => {
-            //     console.error( error );
-            // } );
 
             CKEDITOR.replace('editor', {
-                filebrowserUploadUrl: 'http://localhost:5001/uploads'
+                filebrowserUploadUrl: 'http://localhost:5001/upload'
             }); 
-            //CKFinder.setupCKEditor(editor);
-    //         let editor;
-    //         ClassicEditor
-	// .create( document.querySelector( '#editor1' ), {
-    //     plugins: [ CKFinder ],
-
-    //     // Enable the "Insert image" button in the toolbar.
-    //     toolbar: [ 'uploadImage' ],
-	// 	ckfinder: {
-	// 		uploadUrl: 'http://localhost:5001/uploads',
-	// 	}
-	// } )
-    // .then( newEditor => {
-    //             editor = newEditor;
-    //          })
-	// .catch( error => {
-	// 	console.error( error );
-	// } );
- 
-
-            /* ClassicEditor
-                .create(document.querySelector('#editor'), {
-                    ckfinder: {
-                        uploadUrl: '/upload/images'
-                    }
-                })
-                .catch(function (error) {
-                    console.error(error);
-                }); 
-            const selectedFile = document.querySelector("#blogImage").files[0];
-            fileInput.addEventListener("change", event => {
-                const files = event.target.files;
-                const file = files[0];
-            });*/
 
             const submitButton = document.querySelector('#submit');
             const form = document.querySelector('#form');
             
             submitButton.addEventListener('click', (e) => {
+                const formData = new FormData(form);
                 const blog = CKEDITOR.instances.editor.getData();
                 const blogTitle = $("#blogTitle").val();
                 const blogSubtitle = $("#blogSubtitle").val();
                 const blogCategories = $("#blogCategories").val().split(",");
                 const blogTime = $("#blogTime").val();
-                const blogImage = $("#blogImage").val().replace(/C:\\fakepath\\/i, '');
 
                 const data = {
                     blog: blog,
@@ -130,10 +80,18 @@
                     blogSubtitle: blogSubtitle,
                     blogCategories: blogCategories,
                     blogTime: blogTime,
-                    blogImage: blogImage
                 };
+
+                formData.append("data", JSON.stringify(data));
  
-                $.post("Yeni-Blog-Ekle", { data: data });
+                $.ajax({
+                    url: "Yeni-Blog-Ekle",
+                    type:"POST",
+                    enctype: 'multipart/form-data',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                });
                 form.reset();
                 e.preventDefault();
             });
