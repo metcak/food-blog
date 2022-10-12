@@ -5,10 +5,13 @@ const LocalStrategy = require("passport-local");
 const expressSession = require("express-session");
 const { ensureLoggedIn } = require("connect-ensure-login");
 const Admin = require("./models/adminModel");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const app = express();
 const port = process.env.port || 5001;
-const MONGO_URI = "mongodb+srv://Metin:MetCak0707@cluster0.3o033fs.mongodb.net/?retryWrites=true&w=majority";
+const mongoUri = process.env.MONGO_URI; 
 
 // Static Files
 app.use(express.static("public"));
@@ -20,7 +23,7 @@ app.use("/uploads", express.static("uploads"));
 
 // Database
 mongoose
-  .connect(MONGO_URI, {
+  .connect(mongoUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
