@@ -3,7 +3,6 @@ const { ensureLoggedIn } = require("connect-ensure-login");
 const blogRouter = express.Router();
 const Blog = require("../../models/blogModel");
 const multer = require("multer");
-const multerS3 = require('multer-s3')
 const crypto = require("crypto");
 const sharp = require('sharp');
 const { uploadFile } = require('../../s3');
