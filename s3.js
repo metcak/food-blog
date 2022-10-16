@@ -10,16 +10,16 @@ const accessKey = process.env.AWS_ACCESS_KEY;
 const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
 const s3 = new S3Client({
-  region: bucketRegion,
+  region: `${bucketRegion}`,
   credentials: {
-    accessKeyId: accessKey,
-    secretAccessKey: secretAccessKey
+    accessKeyId: `${accessKey}`,
+    secretAccessKey: `${secretAccessKey}`
   }
 })
 
 function uploadFile(fileBuffer, fileName, mimetype) {
     const uploadParams = {
-      Bucket: bucketName,
+      Bucket: `${bucketName}`,
       Body: fileBuffer,
       Key: fileName,
       ContentType: mimetype
@@ -30,7 +30,7 @@ function uploadFile(fileBuffer, fileName, mimetype) {
 
 async function getObjectSignedUrl(key) {
     const params = {
-      Bucket: bucketName,
+      Bucket: `${bucketName}`,
       Key: key
     }
   

@@ -23,7 +23,7 @@ app.use("/uploads", express.static("uploads"));
 
 // Database
 mongoose
-  .connect(mongoUri, {
+  .connect(`${mongoUri}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
