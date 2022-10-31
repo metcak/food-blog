@@ -61,8 +61,10 @@ adminRouter.post("/signup", async (req, res) => {
   });
 });
 adminRouter.get("/logout", (req, res) => {
-  req.logout();
-  res.redirect("/");
+  req.logout(function(err) {
+    if (err) { return next(err); }
+    res.redirect('/');
+  });
 });
 
 module.exports = adminRouter;
