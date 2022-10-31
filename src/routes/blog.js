@@ -59,7 +59,19 @@ blogRouter.post("/upload", upload.single("upload"), async (req, res) => {
     console.log('File(s): ',req.file);
     const blogImageName = randomImageName();
     const buffer = await sharp(req.file.buffer).resize({height: 300, width: 600, fit: "contain"}).toBuffer();
+    
+    html = "";
+    html += "<script>";
+    html += "var funcNum = " + req.query.CKEditorFuncNum + ";";
+    html += 'var url = "https://food-blog-images.s3.eu-west-1.amazonaws.com/' + blogImageName + '";';
+    html += 'var message = "Uploaded file successfully";';
+    html += "";
+    html +="window.parent.CKEDITOR.tools.callFunction(funcNum, url, message);";
+    html += "</script>";
+    res.send(html);
+
     await uploadFile(buffer, blogImageName, req.file.mimetype);
+    
   } catch (err) {
     res.status(500).json(err);
   }
