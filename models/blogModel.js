@@ -10,6 +10,7 @@ const BlogSchema = mongoose.Schema({
   blogTime: { type: String, required: true },
   blog: { type: String, required: true },
   date: { type: Date, default: Date.now },
+  views: { type: Number, default: 0 },
   slug: { type: String, required: true, unique: true}
 });
 
