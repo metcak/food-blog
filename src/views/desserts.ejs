@@ -22,13 +22,13 @@
                             <a href="/tarifler" class="nav-link">Tarifler</a>
                         </li> -->
                         <li>
-                            <a href="/kahvalti" class="nav-link">Kahvalti</a>
+                            <a href="/kahvalti" class="nav-link">Kahvaltı</a>
                         </li>
                         <li>
                             <a href="/aksam-yemegi" class="nav-link">Akşam Yemeği</a>
                         </li>
                         <li class="active">
-                            <a href="/tatlilar" class="nav-link">Tatlilar</a>
+                            <a href="/tatlilar" class="nav-link">Tatlılar</a>
                         </li>
                          <!--
                         <li>
@@ -153,12 +153,12 @@
                                         <li class="popular-list-item">
                                             <div class="popular-item">
                                                 <div class="popular-img-item">
-                                                    <a class="popular-img-item-pic set-bg" href="#"
+                                                    <a class="popular-img-item-pic set-bg" href="/blog/<%= post.slug %>"
                                                         style="background-image: url(<%=post.blogImage%>)"></a>
                                                 </div>
                                                 <div class="popular-text-item">
                                                     <h4 class="text-title-post">
-                                                        <a href="/blog/<%= post._id %>">
+                                                        <a href="/blog/<%= post.slug %>">
                                                             <%= post.blogTitle %>
                                                         </a>
                                                     </h4>
