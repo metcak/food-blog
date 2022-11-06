@@ -6,10 +6,14 @@ const { getObjectSignedUrl } = require('../../s3');
 homeRouter.get("/", async (req, res) => {
   try {
     const blogs = await Blog.find().sort({ date: "desc" });
+    const views = await Blog.find().sort({ views: -1 });
     for (let blog of blogs) {
       blog.blogImage = await getObjectSignedUrl(blog.blogImage);
     }
-    res.status(200).render("home", { blogs: blogs });
+    for (let view of views) {
+      view.blogImage = await getObjectSignedUrl(view.blogImage);
+    }
+    res.status(200).render("home", { blogs: blogs, views: views });
   } catch (err) {
     res.status(500).json(err);
   }
