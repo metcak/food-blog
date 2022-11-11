@@ -57,13 +57,10 @@
                                             style="background-image: url(<%=post.blogImage%>);">
                                             <div class="post-meta">
                                                 <h4>
-                                                    <%= post.date.getDate() %>
+                                                    <%= post.blogTime %>
                                                 </h4>
                                                 <span>
-                                                    <% const monthNames=["January", "February" , "March" , "April" , "May"
-                                                        , "June" , "July" , "August" , "September" , "October" , "November"
-                                                        , "December" ]; %>
-                                                        <%= monthNames[post.date.getMonth()] %>
+                                                    dakika
                                                 </span>
                                             </div>
                                         </div>
@@ -80,7 +77,10 @@
                                             </h3>
                                             <ul class="post-widget">
                                                 <li>
-                                                    <%= post.blogTime %> dakika
+                                                    <% const monthNames=["Ocak", "Şubat" , "Mart" , "Nisan"
+                                                    , "Mayıs" , "Haziran" , "Temmuz" , "Ağustos" , "Eylül" , "Ekim"
+                                                    , "Kasım" , "Aralık" ]; %>
+                                                    <%= post.date.getDate() %> <%= monthNames[post.date.getMonth()] %> <%= post.date.getFullYear() %>
                                                 </li>
                                             </ul>
                                             <p>
