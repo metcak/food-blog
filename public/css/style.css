@@ -864,6 +864,9 @@ button:not(:disabled) {
     a {
     margin-right: 0px;
   }
+  .categories-post-item.categories-post-item-large .categories-post-item-pic {
+    height: 220px;
+  }
   .categories {
     padding: 30px 0 30px 0;
   }
@@ -891,5 +894,8 @@ button:not(:disabled) {
   .footer-item-follow-links a,
   .humberger-menu-about .humberger-menu-about-social a {
     margin-right: 0px;
+  }
+  .categories-post-item.categories-post-item-large .categories-post-item-pic {
+    height: 220px;
   }
 }
