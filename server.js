@@ -6,12 +6,16 @@ const expressSession = require("express-session");
 const { ensureLoggedIn } = require("connect-ensure-login");
 const Admin = require("./models/adminModel");
 const dotenv = require("dotenv");
+const compression = require('compression');
 
 dotenv.config();
 
 const app = express();
 const port = process.env.port || 5001;
 const mongoUri = process.env.MONGO_URI; 
+
+// Compress all HTTP responses
+app.use(compression());
 
 // Static Files
 app.use(express.static("public"));
