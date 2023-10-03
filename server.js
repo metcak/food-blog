@@ -1,5 +1,4 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const expressSession = require("express-session");
@@ -7,12 +6,12 @@ const { ensureLoggedIn } = require("connect-ensure-login");
 const Admin = require("./models/adminModel");
 const dotenv = require("dotenv");
 const compression = require('compression');
+const { connectDatabase } = require('./db');
 
 dotenv.config();
 
 const app = express();
 const port = process.env.port || 5001;
-const mongoUri = process.env.MONGO_URI; 
 
 // Compress all HTTP responses
 app.use(compression());
@@ -26,21 +25,31 @@ app.use("/ckfinder", express.static(__dirname + "public/ckfinder"));
 app.use("/uploads", express.static("uploads"));
 
 // Database
-mongoose
-  .connect(`${mongoUri}`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true
-  })
-  .then((x) => {
-    console.log(
-      `Connected to Mongo! Database name: "${x.connections[0].name}"`
-    );
-  })
-  .catch((err) => {
-    console.error("Error connecting to mongo", err);
-  });
+connectDatabase()
+.then((x) => {
+      console.log(
+        `Connected to Mongo! Database name: "${x.connections[0].name}"`
+      );
+    })
+    .catch((err) => {
+      console.error("Error connecting to mongo", err);
+    });
+
+// mongoose
+//   .connect(`${mongoUri}`, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     useFindAndModify: false,
+//     useCreateIndex: true
+//   })
+//   .then((x) => {
+//     console.log(
+//       `Connected to Mongo! Database name: "${x.connections[0].name}"`
+//     );
+//   })
+//   .catch((err) => {
+//     console.error("Error connecting to mongo", err);
+//   });
 
 // Templating Engine
 app.set("view engine", "ejs");
