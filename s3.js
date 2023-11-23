@@ -1,8 +1,8 @@
-const { S3Client, PutObjectCommand, GetObjectCommand } = require("@aws-sdk/client-s3");
-const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
-const dotenv = require("dotenv");
+import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { config } from "dotenv";
 
-dotenv.config();
+config();
 
 const bucketName = process.env.AWS_BUCKET_NAME;
 const bucketRegion = process.env.AWS_BUCKET_REGION;
@@ -42,5 +42,7 @@ async function getObjectSignedUrl(key) {
     return url
 }
 
-module.exports.uploadFile = uploadFile;
-module.exports.getObjectSignedUrl = getObjectSignedUrl;
+const _uploadFile = uploadFile;
+export { _uploadFile as uploadFile };
+const _getObjectSignedUrl = getObjectSignedUrl;
+export { _getObjectSignedUrl as getObjectSignedUrl };

@@ -1,8 +1,7 @@
-const mongoose = require("mongoose");
-const marked = require("marked");
-const slugify = require("slugify");
+import { Schema, model } from "mongoose";
+import slugify from "slugify";
 
-const BlogSchema = mongoose.Schema({
+const BlogSchema = Schema({
   blogCategories: { type: Array, required: true },
   blogImage: { type: String, required: true },
   blogTitle: { type: String, required: true },
@@ -21,4 +20,4 @@ BlogSchema.pre("validate", function(next) {
   next()
 })
 
-module.exports = mongoose.model("Blog", BlogSchema);
+export default model("Blog", BlogSchema);

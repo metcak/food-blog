@@ -1,17 +1,17 @@
-const express = require("express");
-const { ensureLoggedIn } = require("connect-ensure-login");
-const blogRouter = express.Router();
-const Blog = require("../../models/blogModel");
-const multer = require("multer");
-const crypto = require("crypto");
-const sharp = require('sharp');
-const { uploadFile } = require('../../s3');
-const { getObjectSignedUrl } = require('../../s3');
-const session = require('express-session');
+import { Router } from "express";
+import { ensureLoggedIn } from "connect-ensure-login";
+const blogRouter = Router();
+import Blog from "../../models/blogModel.js";
+import multer, { memoryStorage } from "multer";
+import { randomBytes } from "crypto";
+import sharp from 'sharp';
+import { uploadFile } from '../../s3.js';
+import { getObjectSignedUrl } from '../../s3.js';
+import session from 'express-session';
 
-const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString("hex")
+const randomImageName = (bytes = 32) => randomBytes(bytes).toString("hex")
 
-const storage = multer.memoryStorage();
+const storage = memoryStorage();
 const upload = multer({ storage: storage });
 
 blogRouter.use("/Yeni-Blog-Ekle", ensureLoggedIn("/signin"), blogRouter);
@@ -147,4 +147,4 @@ blogRouter.get("/api/blogs", async (req, res) => {
   }
 });
 
-module.exports = blogRouter;
+export default blogRouter;

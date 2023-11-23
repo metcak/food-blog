@@ -1,8 +1,8 @@
-const express = require("express");
-const passport = require("passport");
-const adminRouter = express.Router();
-const { ensureLoggedIn } = require("connect-ensure-login");
-const Admin = require("../../models/adminModel");
+import { Router } from "express";
+import passport from 'passport';
+const adminRouter = Router();
+import { ensureLoggedIn } from "connect-ensure-login";
+import Admin from "../../models/adminModel.js";
 
 let adminActions = [
   {
@@ -67,4 +67,4 @@ adminRouter.get("/logout", (req, res) => {
   });
 });
 
-module.exports = adminRouter;
+export default adminRouter;

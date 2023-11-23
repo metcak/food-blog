@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const AboutSchema = mongoose.Schema(
+const AboutSchema = Schema(
   {
     name: { type: String, required: false },
     aboutTitle: { type: String, required: false },
@@ -10,4 +10,4 @@ const AboutSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("About", AboutSchema);
+export default model("About", AboutSchema);

@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
+import { connect } from "mongoose";
+import { config } from "dotenv";
 
-dotenv.config();
+config();
 
 const mongoUri = process.env.MONGO_URI_SLS; 
 let conn = null;
@@ -9,7 +9,7 @@ let conn = null;
 async function connectDatabase () {
     if(conn == null) {
         console.log('Creating new connection to database...');
-        conn = mongoose.connect(`${mongoUri}`, {
+        conn = connect(`${mongoUri}`, {
           serverSelectionTimeoutMS: 5000,
           useNewUrlParser: true,
           useUnifiedTopology: true
@@ -19,4 +19,5 @@ async function connectDatabase () {
     console.log('Connection already established, reusing the connection');
 }
 
-module.exports.connectDatabase = connectDatabase;
+const _connectDatabase = connectDatabase;
+export { _connectDatabase as connectDatabase };

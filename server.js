@@ -1,14 +1,20 @@
-const express = require("express");
-const passport = require("passport");
-const LocalStrategy = require("passport-local");
-const expressSession = require("express-session");
-const { ensureLoggedIn } = require("connect-ensure-login");
-const Admin = require("./models/adminModel");
-const dotenv = require("dotenv");
-const compression = require('compression');
-const { connectDatabase } = require('./db');
+import express, { json, urlencoded } from "express";
+import passport from 'passport';
+import LocalStrategy from "passport-local";
+import expressSession from "express-session";
+import { ensureLoggedIn } from "connect-ensure-login";
+import Admin from "./models/adminModel.js";
+import { config } from "dotenv";
+import compression from 'compression';
+import { connectDatabase } from './db.js';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import path from 'path';
 
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+config();
 
 const app = express();
 const port = process.env.port || 5001;
@@ -16,13 +22,13 @@ const port = process.env.port || 5001;
 // Compress all HTTP responses
 app.use(compression());
 
-// Static Files
-app.use(express.static("public"));
-app.use("/css", express.static(__dirname + "public/css"));
-app.use("/img", express.static(__dirname + "public/img"));
-app.use("/js", express.static(__dirname + "public/js"));
-app.use("/ckfinder", express.static(__dirname + "public/ckfinder"));
-app.use("/uploads", express.static("uploads"));
+//  Static Files
+app.use(express.static('public'));
+app.use('/css', express.static(path.join(__dirname, 'public/css')));
+app.use('/img', express.static(path.join(__dirname, 'public/img')));
+app.use('/js', express.static(path.join(__dirname, 'public/js')));
+app.use('/ckfinder', express.static(path.join(__dirname, 'public/ckfinder')));
+app.use('/uploads', express.static('uploads'));
 
 // Database
 connectDatabase()
@@ -78,15 +84,15 @@ passport.deserializeUser(Admin.deserializeUser());
 // });
 
 // Routes
-const homeRouter = require("./src/routes/home");
-const adminRouter = require("./src/routes/admin");
-const blogRouter = require("./src/routes/blog");
-const categoryRouter = require("./src/routes/category");
-const aboutRouter = require("./src/routes/about");
-const uploadRouter = require("./src/routes/upload");
+import homeRouter from "./src/routes/home.js";
+import adminRouter from "./src/routes/admin.js";
+import blogRouter from "./src/routes/blog.js";
+import categoryRouter from "./src/routes/category.js";
+import aboutRouter from "./src/routes/about.js";
+import uploadRouter from "./src/routes/upload.js";
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(json());
+app.use(urlencoded({ extended: true }));
 
 app.use("/", homeRouter);
 app.use("/", adminRouter);

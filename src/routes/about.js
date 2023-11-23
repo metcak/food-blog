@@ -1,9 +1,9 @@
-const express = require("express");
-const { ensureLoggedIn } = require("connect-ensure-login");
-const aboutRouter = express.Router();
-const About = require("../../models/aboutModel");
-const Blog = require("../../models/blogModel");
-var multer = require("multer");
+import { Router } from "express";
+import { ensureLoggedIn } from "connect-ensure-login";
+const aboutRouter = Router();
+import About from "../../models/aboutModel.js";
+import Blog from "../../models/blogModel.js";
+import multer, { diskStorage } from "multer";
 
 aboutRouter.get("/hakkimda", async (req, res) => {
   try {
@@ -21,7 +21,7 @@ aboutRouter.get("/Resmi-Degistir", async (req, res) => {
   res.render("../views/blog/newAboutImage.ejs");
 });
 
-const storage = multer.diskStorage({
+const storage = diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads");
   },
@@ -87,4 +87,4 @@ aboutRouter.get("/api/abouts", async (req, res) => {
   }
 });
 
-module.exports = aboutRouter;
+export default aboutRouter;

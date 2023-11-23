@@ -1,7 +1,7 @@
-const express = require("express");
-const { ensureLoggedIn } = require("connect-ensure-login");
-const categoryRouter = express.Router();
-const Category = require("../../models/categoryModel");
+import { Router } from "express";
+import { ensureLoggedIn } from "connect-ensure-login";
+const categoryRouter = Router();
+import Category from "../../models/categoryModel.js";
 
 categoryRouter.post("/api/categories", async (req, res) => {
   const newCategory = new Category(req.body);
@@ -29,4 +29,4 @@ categoryRouter.delete("/api/categories/:id", async (req, res) => {
   }
 });
 
-module.exports = categoryRouter;
+export default categoryRouter;

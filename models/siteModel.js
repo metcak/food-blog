@@ -1,10 +1,10 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const SiteSchema = mongoose.Schema({
+const SiteSchema = Schema({
   logo: { type: String, required: "Bos birakilamaz" },
   homeLogoText: { type: String, required: "Bos birakilamaz" },
   aboutImage: { type: String, required: "Bos birakilamaz" },
   aboutText: { type: String, required: "Bos birakilamaz" },
 });
 
-module.exports = mongoose.model("Site", SiteSchema);
+export default model("Site", SiteSchema);

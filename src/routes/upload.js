@@ -1,14 +1,14 @@
-const express = require("express");
-const uploadRouter = express.Router();
-const multipart = require("connect-multiparty");
+import { Router } from "express";
+const uploadRouter = Router();
+import multipart from "connect-multiparty";
 const multipartMiddleware = multipart();
-const fs = require("fs");
+import { readFile, writeFile } from "fs";
 
 uploadRouter.post("/uploads", multipartMiddleware, function (req, res) {
-  fs.readFile(req.files.upload.path, function (err, data) {
+  readFile(req.files.upload.path, function (err, data) {
     var newPath =
       "/Users/burcukepsutlu/Projects/food-blog/uploads/" + req.files.upload.name;
-    fs.writeFile(newPath, data, function (err) {
+    writeFile(newPath, data, function (err) {
       if (err) console.log({ err: err });
       else {
         /* html = "";
@@ -37,4 +37,4 @@ uploadRouter.post("/uploads", multipartMiddleware, function (req, res) {
     });
   });
 });
-module.exports = uploadRouter;
+export default uploadRouter;

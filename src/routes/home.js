@@ -1,7 +1,8 @@
-const express = require("express");
-const homeRouter = express.Router();
-const Blog = require("../../models/blogModel");
-const { getObjectSignedUrl } = require('../../s3');
+import { Router } from "express";
+const homeRouter = Router();
+import Blog from "../../models/blogModel.js";
+import { getObjectSignedUrl } from '../../s3.js';
+import { connectDatabase } from '../../db.js';
 
 homeRouter.get("/", async (req, res) => {
   try {
@@ -69,4 +70,4 @@ homeRouter.get("/signin", async (req, res) => {
   res.status(200).render("../views/admin/signin.ejs");
 });
 
-module.exports = homeRouter;
+export default homeRouter;
