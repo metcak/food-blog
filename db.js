@@ -9,7 +9,7 @@ let conn = null;
 async function connectDatabase () {
     if(conn == null) {
         console.log('Creating new connection to database...');
-        conn = await mongoose.connect(`${mongoUri}`, {
+        conn = mongoose.connect(`${mongoUri}`, {
           serverSelectionTimeoutMS: 5000,
           useNewUrlParser: true,
           useUnifiedTopology: true
