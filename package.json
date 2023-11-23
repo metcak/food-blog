@@ -21,7 +21,7 @@
     "@ckeditor/ckeditor5-adapter-ckfinder": "^28.0.0",
     "@ckeditor/ckeditor5-build-classic": "^28.0.0",
     "@ckeditor/ckeditor5-ckfinder": "^28.0.0",
-    "axios": "^0.21.1",
+    "axios": "^1.6.2",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "connect-ensure-login": "^0.1.1",
@@ -38,7 +38,7 @@
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^6.1.0",
-    "sharp": "^0.31.0",
+    "sharp": "^0.32.6",
     "slugify": "^1.5.3"
   },
   "devDependencies": {
