@@ -4,83 +4,93 @@ const blogRouter = Router();
 import Blog from "../../models/blogModel.js";
 import multer, { memoryStorage } from "multer";
 import { randomBytes } from "crypto";
-import sharp from 'sharp';
-import { uploadFile } from '../../s3.js';
-import { getObjectSignedUrl } from '../../s3.js';
-import session from 'express-session';
+import sharp from "sharp";
+import { uploadFile } from "../../s3.js";
+import { getObjectSignedUrl } from "../../s3.js";
+import session from "express-session";
 
-const randomImageName = (bytes = 32) => randomBytes(bytes).toString("hex")
+const randomImageName = (bytes = 32) => randomBytes(bytes).toString("hex");
 
 const storage = memoryStorage();
 const upload = multer({ storage: storage });
 
 blogRouter.use("/Yeni-Blog-Ekle", ensureLoggedIn("/signin"), blogRouter);
-blogRouter.use (
-  session ({
-      secret: "blablabla",
-      resave: true,
-      saveUninitialized: false,
-      cookie: {}
-    })
+blogRouter.use(
+  session({
+    secret: "blablabla",
+    resave: true,
+    saveUninitialized: false,
+    cookie: {},
+  })
 );
 
 blogRouter.get("/Yeni-Blog-Ekle", async (req, res) => {
   res.render("../views/blog/newBlog.ejs");
 });
 
-blogRouter.post("/Yeni-Blog-Ekle", upload.single("blogImage"), async (req, res) => {
-  console.log('Body: ',JSON.parse(JSON.stringify(req.body)))
-  console.log('File(s): ',req.file)
-  const data = JSON.parse(req.body.data);
-  const blog = data.blog;
-  const blogTitle = data.blogTitle;
-  const blogSubtitle = data.blogSubtitle;
-  const blogCategories = data.blogCategories;
-  const blogTime = data.blogTime;
-  const blogImageName = randomImageName();
-  const buffer = await sharp(req.file.buffer).resize({height: 720, width: 1280, fit: "contain"}).toBuffer();
+blogRouter.post(
+  "/Yeni-Blog-Ekle",
+  upload.single("blogImage"),
+  async (req, res) => {
+    console.log("Body: ", JSON.parse(JSON.stringify(req.body)));
+    console.log("File(s): ", req.file);
+    const data = JSON.parse(req.body.data);
+    const blog = data.blog;
+    const blogTitle = data.blogTitle;
+    const blogSubtitle = data.blogSubtitle;
+    const blogCategories = data.blogCategories;
+    const blogTime = data.blogTime;
+    const blogImageName = randomImageName();
+    const buffer = await sharp(req.file.buffer)
+      .resize({ height: 720, width: 1280, fit: "contain" })
+      .toBuffer();
 
-  await uploadFile(buffer, blogImageName, req.file.mimetype);
+    await uploadFile(buffer, blogImageName, req.file.mimetype);
 
-  const newBlog = {
-    blog: blog,
-    blogTitle: blogTitle,
-    blogSubtitle: blogSubtitle,
-    blogCategories: blogCategories,
-    blogTime: blogTime,
-    blogImage: blogImageName,
-  };
+    const newBlog = {
+      blog: blog,
+      blogTitle: blogTitle,
+      blogSubtitle: blogSubtitle,
+      blogCategories: blogCategories,
+      blogTime: blogTime,
+      blogImage: blogImageName,
+    };
 
-  Blog.create(newBlog)
-    .then((newBlog) => {
-      console.log(newBlog);
-      res.status(201).json(newBlog);
-    })
-    .catch((err) => {
-      console.log("====== ERROR =====");
-      console.log(err);
-      res.send(err);
-    });
-});
+    Blog.create(newBlog)
+      .then((newBlog) => {
+        console.log(newBlog);
+        res.status(201).json(newBlog);
+      })
+      .catch((err) => {
+        console.log("====== ERROR =====");
+        console.log(err);
+        res.send(err);
+      });
+  }
+);
 
 blogRouter.post("/upload", upload.single("upload"), async (req, res) => {
   try {
-    console.log('File(s): ',req.file);
+    console.log("File(s): ", req.file);
     const blogImageName = randomImageName();
-    const buffer = await sharp(req.file.buffer).resize({height: 225, width: 400, fit: "contain"}).toBuffer();
-    
-    html = "";
+    const buffer = await sharp(req.file.buffer)
+      .resize({ height: 225, width: 400, fit: "contain" })
+      .toBuffer();
+
+    let html = "";
     html += "<script>";
     html += "var funcNum = " + req.query.CKEditorFuncNum + ";";
-    html += 'var url = "https://food-blog-images.s3.eu-west-1.amazonaws.com/' + blogImageName + '";';
+    html +=
+      'var url = "https://food-blog-images.s3.eu-west-1.amazonaws.com/' +
+      blogImageName +
+      '";';
     html += 'var message = "Uploaded file successfully";';
     html += "";
-    html +="window.parent.CKEDITOR.tools.callFunction(funcNum, url, message);";
+    html += "window.parent.CKEDITOR.tools.callFunction(funcNum, url, message);";
     html += "</script>";
     res.send(html);
 
     await uploadFile(buffer, blogImageName, req.file.mimetype);
-
   } catch (err) {
     res.status(500).json(err);
   }
@@ -124,13 +134,13 @@ blogRouter.get("/blog/:slug", async (req, res) => {
     for (let blog of blogs) {
       blog.blogImage = await getObjectSignedUrl(blog.blogImage);
     }
-    if(req.session.views) {
+    if (req.session.views) {
       req.session.views++;
       console.log(req.session.views);
-      res.render(`blog/singleBlog`, { blog: blog, blogs: blogs });  
+      res.render(`blog/singleBlog`, { blog: blog, blogs: blogs });
     } else {
-      req.session.views = 1
-      res.render(`blog/singleBlog`, { blog: blog, blogs: blogs });  
+      req.session.views = 1;
+      res.render(`blog/singleBlog`, { blog: blog, blogs: blogs });
       console.log(req.session.views);
     }
   } catch (err) {

@@ -1,101 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Geziteria</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
-        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <script src="//cdn.ckeditor.com/4.19.1/standard/ckeditor.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.min.js"
+      integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+      crossorigin="anonymous"
+    ></script>
+    <script src="//cdn.ckeditor.com/4.19.1/standard-all/ckeditor.js"></script>
     <script src="ckfinder/ckfinder.js"></script>
+  </head>
 
-</head>
-
-<body>
+  <body>
     <nav class="navbar navbar-light bg-light mb-3">
-        <div class="container-fluid">
-            <a class="navbar-brand">Admin</a>
-            <a class="nav-link" href="/logout">Cikis</a>
-        </div>
+      <div class="container-fluid">
+        <a class="navbar-brand">Admin</a>
+        <a class="nav-link" href="/logout">Cikis</a>
+      </div>
     </nav>
     <div class="container mt-5 mb-5">
-        <h1 class="text-center">Yeni Blog Ekle</h1>
-        <form id="form" action="/Yeni-Blog-Ekle" method="post" enctype="multipart/form-data">
-            <div class="form-group mb-3">
-                <label for="blogCategories" class="form-label">Konu</label>
-                <input type="text" class="form-control" id="blogCategories" placeholder="Vejeteryan, Tatlilar vs.">
-            </div>
-            <div class="form-group mb-3">
-                <label for="blogTitle" class="form-label">Baslik</label>
-                <input type="text" class="form-control" id="blogTitle" placeholder="Baslik">
-            </div>
-            <div class="form-group mb-3">
-                <label for="blogSubtitle" class="form-label">Alt baslik</label>
-                <input type="text" class="form-control" id="blogSubtitle" placeholder="Alt baslik">
-            </div>
-            <div class="form-group mb-3">
-                <label for="blogTime" class="form-label">Zaman</label>
-                <input type="number" class="form-control" id="blogTime" placeholder="0">
-            </div>
-            <div class="form-group mb-3">
-                <label for="blogImage" class="form-label">Resim yükle</label>
-                <input class="form-control" type="file" id="blogImage" name="blogImage">
-            </div>
-            <div class="form-group mb-3">
-                <label for="blog" class="form-label">Blog</label>
-                <textarea name="editor" id="editor"></textarea>
-            </div>
-            <button type="submit" id="submit" class="btn btn-primary mt-2">Blogu Ekle</button>
-        </form>
+      <h1 class="text-center">Yeni Blog Ekle</h1>
+      <form
+        id="form"
+        action="/Yeni-Blog-Ekle"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <div class="form-group mb-3">
+          <label for="blogCategories" class="form-label">Konu</label>
+          <input
+            type="text"
+            class="form-control"
+            id="blogCategories"
+            placeholder="Vejeteryan, Tatlilar vs."
+          />
+        </div>
+        <div class="form-group mb-3">
+          <label for="blogTitle" class="form-label">Baslik</label>
+          <input
+            type="text"
+            class="form-control"
+            id="blogTitle"
+            placeholder="Baslik"
+          />
+        </div>
+        <div class="form-group mb-3">
+          <label for="blogSubtitle" class="form-label">Alt baslik</label>
+          <input
+            type="text"
+            class="form-control"
+            id="blogSubtitle"
+            placeholder="Alt baslik"
+          />
+        </div>
+        <div class="form-group mb-3">
+          <label for="blogTime" class="form-label">Zaman</label>
+          <input
+            type="number"
+            class="form-control"
+            id="blogTime"
+            placeholder="0"
+          />
+        </div>
+        <div class="form-group mb-3">
+          <label for="blogImage" class="form-label">Resim yükle</label>
+          <input
+            class="form-control"
+            type="file"
+            id="blogImage"
+            name="blogImage"
+          />
+        </div>
+        <div class="form-group mb-3">
+          <label for="blog" class="form-label">Blog</label>
+          <textarea name="editor" id="editor"></textarea>
+        </div>
+        <button type="submit" id="submit" class="btn btn-primary mt-2">
+          Blogu Ekle
+        </button>
+      </form>
     </div>
 
     <script>
+      $(document).ready(function () {
+        CKEDITOR.replace("editor", {
+          filebrowserUploadMethod: "form",
+          filebrowserUploadUrl: "http://localhost:5001/upload",
+          extraPlugins: "uploadimage,image2",
+          removePlugins: "image",
+        });
 
-        $(document).ready(function () {
+        const submitButton = document.querySelector("#submit");
+        const form = document.querySelector("#form");
 
-            CKEDITOR.replace('editor', {
-                filebrowserUploadMethod: 'form',
-                filebrowserUploadUrl: 'http://localhost:5001/upload'
-            }); 
+        submitButton.addEventListener("click", (e) => {
+          const formData = new FormData(form);
+          const blog = CKEDITOR.instances.editor.getData();
+          const blogTitle = $("#blogTitle").val();
+          const blogSubtitle = $("#blogSubtitle").val();
+          const blogCategories = $("#blogCategories").val().split(",");
+          const blogTime = $("#blogTime").val();
 
-            const submitButton = document.querySelector('#submit');
-            const form = document.querySelector('#form');
-            
-            submitButton.addEventListener('click', (e) => {
-                const formData = new FormData(form);
-                const blog = CKEDITOR.instances.editor.getData();
-                const blogTitle = $("#blogTitle").val();
-                const blogSubtitle = $("#blogSubtitle").val();
-                const blogCategories = $("#blogCategories").val().split(",");
-                const blogTime = $("#blogTime").val();
+          const data = {
+            blog: blog,
+            blogTitle: blogTitle,
+            blogSubtitle: blogSubtitle,
+            blogCategories: blogCategories,
+            blogTime: blogTime,
+          };
 
-                const data = {
-                    blog: blog,
-                    blogTitle: blogTitle,
-                    blogSubtitle: blogSubtitle,
-                    blogCategories: blogCategories,
-                    blogTime: blogTime,
-                };
+          formData.append("data", JSON.stringify(data));
 
-                formData.append("data", JSON.stringify(data));
- 
-                $.ajax({
-                    url: "Yeni-Blog-Ekle",
-                    type:"POST",
-                    enctype: 'multipart/form-data',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                });
-                form.reset();
-                e.preventDefault();
-            });
-        })
-
+          $.ajax({
+            url: "Yeni-Blog-Ekle",
+            type: "POST",
+            enctype: "multipart/form-data",
+            data: formData,
+            processData: false,
+            contentType: false,
+          });
+          form.reset();
+          e.preventDefault();
+        });
+      });
     </script>
-</body>
-
+  </body>
 </html>
