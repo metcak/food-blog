@@ -1,8 +1,7 @@
 import { Router } from "express";
 const homeRouter = Router();
 import Blog from "../../models/blogModel.js";
-import { getObjectSignedUrl } from '../../s3.js';
-import { connectDatabase } from '../../db.js';
+import { getObjectSignedUrl } from "../../s3.js";
 
 homeRouter.get("/", async (req, res) => {
   try {
@@ -68,6 +67,10 @@ homeRouter.get("/tatlilar", async (req, res) => {
 });
 homeRouter.get("/signin", async (req, res) => {
   res.status(200).render("../views/admin/signin.ejs");
+});
+
+homeRouter.get("/ads.txt", async (req, res) => {
+  res.status(200).sendFile("ads.txt");
 });
 
 export default homeRouter;
