@@ -1,15 +1,15 @@
 import express, { json, urlencoded } from "express";
-import passport from 'passport';
+import passport from "passport";
 import LocalStrategy from "passport-local";
 import expressSession from "express-session";
 import { ensureLoggedIn } from "connect-ensure-login";
 import Admin from "./models/adminModel.js";
 import { config } from "dotenv";
-import compression from 'compression';
-import { connectDatabase } from './db.js';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-import path from 'path';
+import compression from "compression";
+import { connectDatabase } from "./db.js";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+import path from "path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -23,23 +23,23 @@ const port = process.env.port || 5001;
 app.use(compression());
 
 //  Static Files
-app.use(express.static('public'));
-app.use('/css', express.static(path.join(__dirname, 'public/css')));
-app.use('/img', express.static(path.join(__dirname, 'public/img')));
-app.use('/js', express.static(path.join(__dirname, 'public/js')));
-app.use('/ckfinder', express.static(path.join(__dirname, 'public/ckfinder')));
-app.use('/uploads', express.static('uploads'));
+app.use(express.static("public"));
+app.use("/css", express.static(path.join(__dirname, "public/css")));
+app.use("/img", express.static(path.join(__dirname, "public/img")));
+app.use("/js", express.static(path.join(__dirname, "public/js")));
+app.use("/ckfinder", express.static(path.join(__dirname, "public/ckfinder")));
+app.use("/uploads", express.static("uploads"));
 
 // Database
 connectDatabase()
-.then((x) => {
-      console.log(
-        `Connected to Mongo! Database name: "${x.connections[0].name}"`
-      );
-    })
-    .catch((err) => {
-      console.error("Error connecting to mongo", err);
-    });
+  .then((x) => {
+    console.log(
+      `Connected to Mongo! Database name: "${x.connections[0].name}"`
+    );
+  })
+  .catch((err) => {
+    console.error("Error connecting to mongo", err);
+  });
 
 // mongoose
 //   .connect(`${mongoUri}`, {
@@ -101,5 +101,5 @@ app.use("/", categoryRouter);
 app.use("/", aboutRouter);
 app.use("/", uploadRouter);
 
-// Listen on port 5000
+// Listen on port 5001
 app.listen(port, () => console.log(`Listening on port ${port}`));
