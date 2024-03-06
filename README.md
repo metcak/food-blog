@@ -9,16 +9,23 @@ Welcome to the Food Blog repository! This project is a platform for creating foo
 To get started with the Food Blog, follow these steps:
 
 1. **Clone the Repository:**
+
    ```bash
    git clone https://github.com/metcak/food-blog.git
 
+   ```
+
 2. **Install Dependencies:**
+
    ```bash
    cd food-blog
    npm install
 
-2. **Run the Application:**
+   ```
+
+3. **Run the Application:**
    ```bash
    npm start
+   ```
 
-This will start the development server, and you can access the blog by navigating to http://localhost:3000 in your web browser.
+This will start the development server, and you can access the blog by navigating to http://localhost:5001 in your web browser.
