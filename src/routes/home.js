@@ -69,6 +69,10 @@ homeRouter.get("/signin", async (req, res) => {
   res.status(200).render("../views/admin/signin.ejs");
 });
 
+homeRouter.get("/gizlilik-politikasi", async (req, res) => {
+  res.status(200).send("gizlilik-politikasi");
+});
+
 homeRouter.get("/ads.txt", async (req, res) => {
   res.status(200).sendFile("ads.txt");
 });
